@@ -1,4 +1,4 @@
-export interface Response {
+export interface EPGResponse {
   entry: Entry;
   response: Response;
   status: string;

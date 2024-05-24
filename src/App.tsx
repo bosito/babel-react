@@ -1,6 +1,6 @@
 import { useState } from "react";
 import claro_video from "./assets/claro_video.png";
-import { Button, CardChannelDemo } from "./components";
+import { Button, CardChannelDemo, Modal } from "./components";
 import { card_channel_mock_data } from "./utils";
 
 const App = () => {
@@ -26,6 +26,7 @@ const App = () => {
           </section>
         </div>
       </div>
+      <Modal show={isModalOpen} onCloseModal={handleToggleModal} />
     </>
   );
 };

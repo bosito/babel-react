@@ -19,7 +19,7 @@ const Modal = ({ show, onCloseModal }: IModal) => {
 
   // inside of that hook we will add all the logic from modal,
   // the idea is to be agnostic with logic and the visual elements
-  const { error, isLoading, channels, selectedChannel, setSelectedChannel } =
+  const { isLoading, channels, selectedChannel, setSelectedChannel } =
     useApgChannel();
 
   return (

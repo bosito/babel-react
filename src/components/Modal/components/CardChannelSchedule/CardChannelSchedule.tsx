@@ -5,6 +5,7 @@ import { formatToAmPm } from "../../../../utils/functions";
 interface ICardChannelSchedule extends Event {
   index?: number;
   wasSelected?: boolean;
+  onClick: () => void;
 }
 
 const CardChannelSchedule = ({
@@ -14,6 +15,7 @@ const CardChannelSchedule = ({
   date_end,
   language,
   wasSelected,
+  onClick,
 }: ICardChannelSchedule) => {
   return (
     <AnimatePresence>
@@ -21,6 +23,7 @@ const CardChannelSchedule = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        onClick={onClick}
         className={`m-1 rounded-md  cursor-pointer  text-white px-5 overflow-clip ${
           wasSelected
             ? "bg-gradient-to-r from-gray-800 to-gray-600"

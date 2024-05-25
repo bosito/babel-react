@@ -5,13 +5,14 @@ import {
   getSevenDaysLater,
   parseDate,
 } from "../../../utils/functions";
-import { Channel } from "../../../interfaces";
+import { Channel, ISelectedChannel } from "../../../interfaces";
 
 const useApgChannel = () => {
   const [dateFrom, setDateFrom] = useState<string>("");
   const [dateTo, setDateTo] = useState<string>("");
   const [channels, setChannels] = useState<Channel[]>([]);
-  const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
+  const [selectedChannel, setSelectedChannel] =
+    useState<ISelectedChannel | null>(null);
   const { data, error, isLoading } = useApgChannelQuery(
     {
       device_id: "web",

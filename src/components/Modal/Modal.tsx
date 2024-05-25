@@ -5,6 +5,7 @@ import { useApgChannel } from "./hooks";
 import image_test from "../../assets/avengers.png";
 import { format } from "date-fns";
 import { formatToAmPm } from "../../utils/functions";
+import { ISelectedChannel } from "../../interfaces";
 
 interface IModal {
   show: boolean;
@@ -44,7 +45,33 @@ const Modal = ({ show, onCloseModal }: IModal) => {
             >
               <IoClose size={25} />
             </button>
-            <header className="flex w-full h-full"></header>
+            <header className="flex flex-row w-full h-full py-2 px-10 justify-between items-center">
+              <div className="flex flex-col w-1/2">
+                <h2 className="text-white font-bold">ESTÁS VIENDO</h2>
+                <h3 className="text-white font-sans">
+                  {selectedChannel?.name}
+                </h3>
+                <p className="text-xs w-48 text-white">
+                  {!!selectedChannel &&
+                    formatToAmPm(selectedChannel.date_begin)}{" "}
+                  -{" "}
+                  {!!selectedChannel && formatToAmPm(selectedChannel.date_end)}
+                </p>
+                <p className="text-white font-sans text-sm mt-5">
+                  {selectedChannel?.description}
+                </p>
+              </div>
+              <img
+                src={
+                  // eslint-disable-next-line no-extra-boolean-cast
+                  Boolean(selectedChannel?.source_uri.length)
+                    ? selectedChannel?.source_uri
+                    : selectedChannel?.channelImageUrl
+                }
+                alt=""
+                className="w-96 h-60 rounded-md bg-gray-800"
+              />
+            </header>
             <footer className="w-full h-10"></footer>
           </section>
           <section className="flex flex-col h-full relative  bg-gray-900 overflow-auto scroll-smooth">
@@ -62,14 +89,21 @@ const Modal = ({ show, onCloseModal }: IModal) => {
                 })}
               </section>
               <section className="flex flex-col flex-1">
-                {channels.map(({ events, id }) => {
+                {channels.map(({ events, id, image }) => {
                   return (
                     <div key={id} className="flex flex-row w-full min-h-24">
                       {events.map((tvEvent, index) => {
+                        const selectedEvent: ISelectedChannel = {
+                          ...tvEvent,
+                          channelImageUrl: image,
+                        };
+
                         return (
                           <CardChannelSchedule
                             key={tvEvent.id}
                             index={index}
+                            onClick={() => setSelectedChannel(selectedEvent)}
+                            wasSelected={selectedChannel?.id === tvEvent.id}
                             {...tvEvent}
                           />
                         );

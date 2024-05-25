@@ -10,3 +10,5 @@ export interface ICardChannelMockData {
 export interface ISelectedChannel extends Event {
   channelImageUrl?: string;
 }
+
+export type SelectedChannelState = ISelectedChannel | null;

@@ -5,10 +5,13 @@ import {
   getSevenDaysLater,
   parseDate,
 } from "../../../utils/functions";
+import { Channel } from "../../../interfaces";
 
 const useApgChannel = () => {
   const [dateFrom, setDateFrom] = useState<string>("");
   const [dateTo, setDateTo] = useState<string>("");
+  const [channels, setChannels] = useState<Channel[]>([]);
+  const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
   const { data, error, isLoading } = useApgChannelQuery(
     {
       device_id: "web",
@@ -31,7 +34,11 @@ const useApgChannel = () => {
     { refetchOnFocus: true, refetchOnMountOrArgChange: true }
   );
 
-  console.log("data --", data?.response.channels);
+  const handleChannels = () => {
+    if (data?.response) {
+      setChannels(data.response.channels);
+    }
+  };
 
   const initialDateFromState = () => {
     const currentDate: Date = new Date();
@@ -50,14 +57,22 @@ const useApgChannel = () => {
   };
 
   useEffect(() => {
+    handleChannels();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  useEffect(() => {
     initialDateFromState();
   }, []);
 
   return {
     data,
+    channels,
     error,
     isLoading,
     handleGetSevenDaysLater,
+    selectedChannel,
+    setSelectedChannel,
   };
 };
 

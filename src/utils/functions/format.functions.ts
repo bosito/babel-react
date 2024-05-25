@@ -1,3 +1,5 @@
+import { parse, format } from "date-fns";
+
 // * NOTE: that is the format date AAAAMMDDHHMMSS example: 20210812200256
 export const formatDate = (date: Date): string => {
   // the months in JavaScript are 0 to 11, for that reason we need the pad function
@@ -44,4 +46,15 @@ export const parseDate = (dateString: string): Date => {
 
   // we need to create a new Date object
   return new Date(year, month, day, hour, minute, second);
+};
+
+// format the time hour
+// the dateString have to be like this format yyyy/MM/dd HH:mm:ss
+export const formatToAmPm = (dateString: string): string => {
+  const date: Date = parse(dateString, "yyyy/MM/dd HH:mm:ss", new Date());
+
+  // format the object Date to AM/PM format
+  const formattedTime: string = format(date, "hh:mm a");
+
+  return formattedTime;
 };
